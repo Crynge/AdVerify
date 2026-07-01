@@ -126,7 +126,7 @@ async fn main() -> Result<()> {
     Ok(())
 }
 
-async fn serve_api(host: &str, port: u16) -> Result<()> {
+async fn serve_api(_host: &str, _port: u16) -> Result<()> {
     tracing::info!("API server not available in CLI binary. Use 'cargo run --bin adverify-api' to start the API server.");
     tracing::info!("Alternatively, use the library directly.");
     Ok(())
