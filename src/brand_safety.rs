@@ -282,7 +282,7 @@ impl BrandSafetyAnalyzer {
             || drugs > 0.5
             || gambling > 0.5
             || profanity > 0.5
-            || overall > 0.4;
+            || overall > 0.2;
 
         BrandSafetyScore {
             adult,
