@@ -15,7 +15,7 @@ tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 chrono = { version = "0.4", features = ["serde"] }
 csv = "1"
-ndarray = "0.16"
+ndarray = { version = "0.16", features = ["serde"] }
 thiserror = "2"
 anyhow = "1"
 hyper = { version = "1", features = ["server", "http1"] }

@@ -39,16 +39,16 @@ pub struct BrandSafetyScore {
 #[derive(Clone)]
 pub struct BrandSafetyAnalyzer {
     /// Category name → (keyword, weight) pairs.
-    categories: HashMap<String, Vec<(String, f64)>>,
+    categories: HashMap<&'static str, Vec<(&'static str, f64)>>,
 }
 
 impl BrandSafetyAnalyzer {
     /// Creates a new `BrandSafetyAnalyzer` with a comprehensive keyword lexicon.
     pub fn new() -> Self {
-        let mut categories: HashMap<String, Vec<(String, f64)>> = HashMap::new();
+        let mut categories: HashMap<&'static str, Vec<(&'static str, f64)>> = HashMap::new();
 
         categories.insert(
-            "adult".into(),
+            "adult",
             vec![
                 ("porn", 0.9),
                 ("pornography", 1.0),
@@ -77,7 +77,7 @@ impl BrandSafetyAnalyzer {
         );
 
         categories.insert(
-            "violence".into(),
+            "violence",
             vec![
                 ("kill", 0.6),
                 ("murder", 0.9),
@@ -110,7 +110,7 @@ impl BrandSafetyAnalyzer {
         );
 
         categories.insert(
-            "hate_speech".into(),
+            "hate_speech",
             vec![
                 ("nazi", 0.9),
                 ("white supremacist", 1.0),
@@ -135,7 +135,7 @@ impl BrandSafetyAnalyzer {
         );
 
         categories.insert(
-            "drugs".into(),
+            "drugs",
             vec![
                 ("cocaine", 0.9),
                 ("heroin", 1.0),
@@ -162,7 +162,7 @@ impl BrandSafetyAnalyzer {
         );
 
         categories.insert(
-            "gambling".into(),
+            "gambling",
             vec![
                 ("casino", 0.7),
                 ("poker", 0.5),
@@ -184,7 +184,7 @@ impl BrandSafetyAnalyzer {
         );
 
         categories.insert(
-            "profanity".into(),
+            "profanity",
             vec![
                 ("fuck", 0.8),
                 ("shit", 0.6),

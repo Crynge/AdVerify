@@ -11,7 +11,6 @@ use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 
 use crate::bid_stream::ProcessedBatch;
-use crate::detection::FraudScore;
 
 /// Summary statistics for a batch of processed bid requests.
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -293,6 +292,7 @@ mod tests {
     use super::*;
     use crate::bid_stream::ProcessedResult;
     use crate::bid_stream::BidRequest;
+    use crate::detection::FraudScore;
 
     fn make_result(is_fraud: bool, conf: f64, reasons: Vec<String>) -> ProcessedResult {
         ProcessedResult {

@@ -258,7 +258,7 @@ impl FeatureExtractor {
                 }
                 normalized
             }
-            None => features.clone(),
+            _ => features.clone(),
         }
     }
 

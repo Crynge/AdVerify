@@ -138,7 +138,7 @@ impl GeometricPredictor {
                 // Below the fold — penalty based on how far
                 let fold_distance = params.ad_position_y as f64 - params.viewport_height as f64;
                 if fold_distance > 0.0 {
-                    (1.0 - (fold_distance / (params.viewport_height as f64 * 3.0)).clamp(0.0, 0.5))
+                    1.0 - (fold_distance / (params.viewport_height as f64 * 3.0)).clamp(0.0, 0.5)
                 } else {
                     1.0
                 }

@@ -3,7 +3,6 @@
 //! Provides types and utilities for parsing OpenRTB 2.6 bid requests
 //! from JSON streams and processing them asynchronously at high throughput.
 
-use std::collections::HashMap;
 use std::path::Path;
 
 use anyhow::{Context, Result};

@@ -134,7 +134,7 @@ impl GeneralizedFraudDetector {
     /// than humanly possible.
     fn detect_click_injection(&self, request: &BidRequest) -> FraudScore {
         let mut reasons = Vec::new();
-        let mut confidence = 0.0;
+        let mut confidence: f64 = 0.0;
 
         // Heuristic 1: Missing or empty IFA (Identifier for Advertisers)
         // Legitimate mobile traffic almost always has an IFA.
@@ -180,7 +180,7 @@ impl GeneralizedFraudDetector {
     /// their inventory as belonging to a premium publisher.
     fn detect_impression_laundering(&self, request: &BidRequest) -> FraudScore {
         let mut reasons = Vec::new();
-        let mut confidence = 0.0;
+        let mut confidence: f64 = 0.0;
 
         // Heuristic 1: App exists but has no bundle or suspicious bundle
         if let Some(ref app) = request.app {
@@ -234,7 +234,7 @@ impl GeneralizedFraudDetector {
     /// Detects bot traffic by analyzing user-agent and behavioral signals.
     fn detect_bot_traffic(&self, request: &BidRequest) -> FraudScore {
         let mut reasons = Vec::new();
-        let mut confidence = 0.0;
+        let mut confidence: f64 = 0.0;
 
         if let Some(ref device) = request.device {
             let ua_lower = device.ua.to_lowercase();
@@ -303,7 +303,7 @@ impl GeneralizedFraudDetector {
     /// so only the top ad is visible but all generate impressions.
     fn detect_ad_stacking(&self, request: &BidRequest) -> FraudScore {
         let mut reasons = Vec::new();
-        let mut confidence = 0.0;
+        let mut confidence: f64 = 0.0;
 
         if let Some(ref device) = request.device {
             if let (Some(screen_w), Some(screen_h)) = (device.w, device.h) {
