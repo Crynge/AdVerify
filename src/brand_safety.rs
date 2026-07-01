@@ -253,7 +253,7 @@ impl BrandSafetyAnalyzer {
                 0.0
             };
 
-            category_scores.insert(category.clone(), normalized);
+            category_scores.insert(category.to_string(), normalized);
         }
 
         let adult = *category_scores.get("adult").unwrap_or(&0.0);
