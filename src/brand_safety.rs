@@ -131,6 +131,8 @@ impl BrandSafetyAnalyzer {
                 ("transphobic", 0.7),
                 ("racist", 0.7),
                 ("fascist", 0.5),
+                ("hate speech", 0.7),
+                ("bigotry", 0.6),
             ],
         );
 

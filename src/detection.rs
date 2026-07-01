@@ -168,7 +168,7 @@ impl GeneralizedFraudDetector {
 
         confidence = confidence.clamp(0.0, 1.0);
         FraudScore {
-            is_fraudulent: confidence > 0.4,
+            is_fraudulent: confidence >= 0.4,
             confidence,
             reasons,
         }
@@ -225,7 +225,7 @@ impl GeneralizedFraudDetector {
 
         confidence = confidence.clamp(0.0, 1.0);
         FraudScore {
-            is_fraudulent: confidence > 0.4,
+            is_fraudulent: confidence >= 0.4,
             confidence,
             reasons,
         }
@@ -316,7 +316,7 @@ impl GeneralizedFraudDetector {
 
                             // Heuristic 1: Ad larger than viewport
                             if ad_area > viewport_area {
-                                confidence += 0.30;
+                                confidence += 0.45;
                                 reasons.push(format!(
                                     "Ad ({ad_w}x{ad_h}) larger than viewport ({screen_w}x{screen_h}) — potential stacking"
                                 ));
@@ -353,7 +353,7 @@ impl GeneralizedFraudDetector {
 
         confidence = confidence.clamp(0.0, 1.0);
         FraudScore {
-            is_fraudulent: confidence > 0.4,
+            is_fraudulent: confidence >= 0.4,
             confidence,
             reasons,
         }
