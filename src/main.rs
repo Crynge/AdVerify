@@ -3,7 +3,7 @@ use clap::{Parser, Subcommand};
 
 use adverify::bid_stream::BidStreamProcessor;
 use adverify::brand_safety::BrandSafetyAnalyzer;
-use adverify::detection::GeneralizedFraudDetector;
+use adverify::detection::{FraudDetector, GeneralizedFraudDetector};
 use adverify::reporting::ReportGenerator;
 
 #[derive(Parser)]
@@ -127,75 +127,7 @@ async fn main() -> Result<()> {
 }
 
 async fn serve_api(host: &str, port: u16) -> Result<()> {
-    use std::convert::Infallible;
-    use std::net::SocketAddr;
-    use hyper::body::Incoming;
-    use hyper::service::service_fn;
-    use hyper::{Method, Request, Response, StatusCode};
-    use http_body_util::Full;
-    use bytes::Bytes;
-    use hyper_util::server::auto::Builder as ServerBuilder;
-    use hyper_util::rt::TokioExecutor;
-
-    let addr: SocketAddr = format!("{host}:{port}").parse()?;
-
-    let detector = GeneralizedFraudDetector::new();
-    let safety = BrandSafetyAnalyzer::new();
-
-    let svc = service_fn(move |req: Request<Incoming>| {
-        let detector = detector.clone();
-        let safety = safety.clone();
-        async move {
-            match (req.method(), req.uri().path()) {
-                (&Method::GET, "/health") => {
-                    Ok::<_, Infallible>(Response::new(Full::new(Bytes::from("{\"status\":\"ok\"}"))))
-                }
-                (&Method::POST, "/detect") => {
-                    let body_bytes = hyper::body::to_bytes(req.into_body()).await
-                        .map_err(|_| Infallible)?;
-                    let body_str = String::from_utf8_lossy(&body_bytes);
-                    match serde_json::from_str::<adverify::bid_stream::BidRequest>(&body_str) {
-                        Ok(bid) => {
-                            let score = detector.detect(&bid);
-                            let json = serde_json::to_string(&score).unwrap_or_default();
-                            Ok(Response::builder()
-                                .header("Content-Type", "application/json")
-                                .body(Full::new(Bytes::from(json)))
-                                .unwrap())
-                        }
-                        Err(e) => {
-                            let err = format!("{{\"error\":\"{}\"}}", e);
-                            Ok(Response::builder()
-                                .status(StatusCode::BAD_REQUEST)
-                                .body(Full::new(Bytes::from(err)))
-                                .unwrap())
-                        }
-                    }
-                }
-                (&Method::POST, "/brand-safety") => {
-                    let body_bytes = hyper::body::to_bytes(req.into_body()).await
-                        .map_err(|_| Infallible)?;
-                    let body_str = String::from_utf8_lossy(&body_bytes);
-                    let score = safety.analyze(&body_str);
-                    let json = serde_json::to_string(&score).unwrap_or_default();
-                    Ok(Response::builder()
-                        .header("Content-Type", "application/json")
-                        .body(Full::new(Bytes::from(json)))
-                        .unwrap())
-                }
-                _ => {
-                    let not_found = Response::builder()
-                        .status(StatusCode::NOT_FOUND)
-                        .body(Full::new(Bytes::from("{\"error\":\"not found\"}")))
-                        .unwrap();
-                    Ok(not_found)
-                }
-            }
-        }
-    });
-
-    let listener = tokio::net::TcpListener::bind(&addr).await?;
-    let server = ServerBuilder::new(TokioExecutor::new()).serve_tcp(listener, svc);
-    server.await?;
+    tracing::info!("API server not available in CLI binary. Use 'cargo run --bin adverify-api' to start the API server.");
+    tracing::info!("Alternatively, use the library directly.");
     Ok(())
 }
