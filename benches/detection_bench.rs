@@ -1,7 +1,7 @@
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
 
 use adverify::bid_stream::BidRequest;
-use adverify::detection::GeneralizedFraudDetector;
+use adverify::detection::{FraudDetector, GeneralizedFraudDetector};
 
 fn make_bench_request() -> BidRequest {
     BidRequest {
